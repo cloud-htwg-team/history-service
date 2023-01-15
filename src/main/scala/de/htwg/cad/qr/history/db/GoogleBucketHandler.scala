@@ -1,4 +1,4 @@
-package de.htwg.cad.timetracker.tracking.db
+package de.htwg.cad.qr.history.db
 
 import com.google.cloud.storage.{BlobId, BlobInfo, StorageOptions}
 

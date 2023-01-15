@@ -1,4 +1,4 @@
-package de.htwg.cad.timetracker.tracking
+package de.htwg.cad.qr.history
 
 final case class CodeAdditionRequest(createdAt: Long, qrCode: String)
 final case class CodeMetadataShort(userId: String, entryId: String, createdAt: Long)

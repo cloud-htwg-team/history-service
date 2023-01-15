@@ -1,4 +1,4 @@
-package de.htwg.cad.timetracker.tracking
+package de.htwg.cad.qr.history
 
 import spray.json.DefaultJsonProtocol._
 import spray.json.RootJsonFormat

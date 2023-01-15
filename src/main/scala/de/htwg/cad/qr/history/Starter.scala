@@ -1,11 +1,11 @@
-package de.htwg.cad.timetracker.tracking
+package de.htwg.cad.qr.history
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.Directives.{pathEnd, _}
-import de.htwg.cad.timetracker.tracking.db.HistoryPersistenceHandler
+import de.htwg.cad.qr.history.db.HistoryPersistenceHandler
 import spray.json.DefaultJsonProtocol._
 
 import scala.concurrent.ExecutionContextExecutor

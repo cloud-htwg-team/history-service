@@ -1,4 +1,4 @@
-name := "qr-history"
+name := "history-service"
 
 version := "0.1"
 

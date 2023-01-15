@@ -1,8 +1,8 @@
-package de.htwg.cad.timetracker.tracking.db
+package de.htwg.cad.qr.history.db
 
 import com.google.cloud.datastore.StructuredQuery.{CompositeFilter, PropertyFilter}
 import com.google.cloud.datastore._
-import de.htwg.cad.timetracker.tracking.{CodeMetadataExtended, CodeMetadataShort}
+import de.htwg.cad.qr.history.{CodeMetadataExtended, CodeMetadataShort}
 
 import scala.collection.mutable.ListBuffer
 

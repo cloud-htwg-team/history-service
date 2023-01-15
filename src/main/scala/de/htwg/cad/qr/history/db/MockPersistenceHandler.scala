@@ -1,6 +1,6 @@
-package de.htwg.cad.timetracker.tracking.db
+package de.htwg.cad.qr.history.db
 
-import de.htwg.cad.timetracker.tracking.{CodeAdditionRequest, CodeEntry, CodeMetadataShort}
+import de.htwg.cad.qr.history.{CodeAdditionRequest, CodeEntry, CodeMetadataShort}
 
 import java.util.{Base64, UUID}
 import scala.collection.mutable
