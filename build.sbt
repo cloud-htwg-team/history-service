@@ -18,5 +18,6 @@ libraryDependencies += "com.google.cloud" % "google-cloud-datastore" % "2.12.3"
 
 assembly / assemblyMergeStrategy := {
   case PathList("META-INF", _*) => MergeStrategy.discard
+  case PathList("reference.conf") => MergeStrategy.concat
   case _                        => MergeStrategy.first
 }
