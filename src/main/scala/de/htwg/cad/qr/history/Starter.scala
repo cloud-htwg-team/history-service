@@ -29,48 +29,56 @@ object Starter extends App with JsonParser {
     }
 
   val route = Route.seal(
-    pathPrefix("history" / "tenants" / Segment) { tenantId => {
-      concat(
-        path("entries") {
-          get {
-            complete(persistence.getTenantEntries(tenantId))
-          }
-        },
-        pathPrefix("users" / Segment / "entries") { userId => {
-          concat(
-            pathEnd {
-              concat(
-                post {
-                  entity(as[CodeAdditionRequest]) { request =>
-                    Try(Base64.getDecoder.decode(request.qrCode)) match {
-                      case scala.util.Success(_) => complete(persistence.postEntry(tenantId, userId, request))
-                      case scala.util.Failure(_) => complete(HttpResponse(BadRequest, entity = "could not decode base64 qr code"))
+    concat(
+      path("test") {
+        get {
+          complete("Working!")
+        }
+      },
+      pathPrefix("history" / "tenants" / Segment) { tenantId => {
+        concat(
+          path("entries") {
+            get {
+              complete(persistence.getTenantEntries(tenantId))
+            }
+          },
+          pathPrefix("users" / Segment / "entries") { userId => {
+            concat(
+              pathEnd {
+                concat(
+                  post {
+                    entity(as[CodeAdditionRequest]) { request =>
+                      Try(Base64.getDecoder.decode(request.qrCode)) match {
+                        case scala.util.Success(_) => complete(persistence.postEntry(tenantId, userId, request))
+                        case scala.util.Failure(_) => complete(HttpResponse(BadRequest, entity = "could not decode base64 qr code"))
+                      }
+                    }
+                  },
+                  get {
+                    complete(persistence.getUserEntries(tenantId, userId))
+                  }
+                )
+              },
+              pathPrefix(Segment) { entryId =>
+                concat(
+                  pathEnd {
+                    get {
+                      complete(persistence.getEntry(tenantId, userId, entryId))
+                    }
+                  },
+                  path("code") {
+                    get {
+                      complete(persistence.getQrCode(tenantId, userId, entryId))
                     }
                   }
-                },
-                get {
-                  complete(persistence.getUserEntries(tenantId, userId))
-                }
-              )
-            },
-            pathPrefix(Segment) { entryId =>
-              concat(
-                pathEnd {
-                  get {
-                    complete(persistence.getEntry(tenantId, userId, entryId))
-                  }
-                },
-                path("code") {
-                  get {
-                    complete(persistence.getQrCode(tenantId, userId, entryId))
-                  }
-                }
-              )
-            })
-        }
-        }
-      )
-    }})
+                )
+              })
+          }
+          }
+        )
+      }
+      }
+    ))
 
   val bindingFuture = Http().newServerAt("0.0.0.0", 8888).bind(route)
 }
