@@ -33,7 +33,7 @@ FROM alpine
 ENV JAVA_MINIMAL=/opt/jre
 ENV PATH="$PATH:$JAVA_MINIMAL/bin"
 
-COPY --from=builder "/root/target/scala-2.13/qr-history-assembly-0.1.jar" "/app.jar"
+COPY --from=builder "/root/target/scala-2.13/history-service-assembly-0.1.jar" "/app.jar"
 COPY --from=packager "$JAVA_MINIMAL" "$JAVA_MINIMAL"
 
 EXPOSE 8080

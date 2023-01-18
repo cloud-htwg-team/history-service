@@ -15,3 +15,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "com.google.cloud" % "google-cloud-storage" % "2.14.0"
 libraryDependencies += "com.google.cloud" % "google-cloud-datastore" % "2.12.3"
+
+assembly / assemblyMergeStrategy := {
+  case PathList("META-INF", _*) => MergeStrategy.discard
+  case _                        => MergeStrategy.first
+}
