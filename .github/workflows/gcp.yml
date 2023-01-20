@@ -45,3 +45,4 @@ jobs:
         docker tag $IMAGE_NAME:latest eu.gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
         docker push eu.gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
         docker push eu.gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+        
