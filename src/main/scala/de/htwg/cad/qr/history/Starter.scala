@@ -59,6 +59,7 @@ object Starter extends App with JsonParser {
                   post {
                     entity(as[CodeAdditionRequest]) { request =>
                       Try(Base64.getDecoder.decode(request.qrCode)) match {
+                        // TODO: use request.idToken
                         case scala.util.Success(_) => complete(persistence.postEntry(tenantId, userId, request))
                         case scala.util.Failure(_) => complete(HttpResponse(BadRequest, entity = "could not decode base64 qr code"))
                       }
