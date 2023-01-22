@@ -45,7 +45,7 @@ object Starter extends App with JsonParser {
           complete("History microservice works! :)  - path: '/'!")
         }
       },
-      pathPrefix("history" / "tenants" / Segment) { tenantId => {
+      pathPrefix("secure" / "history" / "tenants" / Segment) { tenantId => {
         concat(
           path("entries") {
             get {
