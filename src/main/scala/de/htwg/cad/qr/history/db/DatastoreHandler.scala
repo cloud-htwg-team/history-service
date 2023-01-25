@@ -4,7 +4,7 @@ import com.google.cloud.datastore.StructuredQuery.{CompositeFilter, PropertyFilt
 import com.google.cloud.datastore._
 import de.htwg.cad.qr.history.{CodeMetadataExtended, CodeMetadataShort}
 
-import scala.collection.mutable.ListBuffer
+import scala.jdk.CollectionConverters.IteratorHasAsScala
 
 private object DatastoreHandler {
   private val datastore = DatastoreOptions.getDefaultInstance.getService
@@ -50,18 +50,11 @@ private object DatastoreHandler {
     collectEntries(query)
   }
 
-  private def collectEntries(query: EntityQuery): List[CodeMetadataShort] = {
-    val queryResult: QueryResults[Entity] = datastore.run(query, Seq.empty[ReadOption]: _*)
-
-    val results = new ListBuffer[CodeMetadataShort]
-    while (queryResult.hasNext)
-      results += {
-        val entry = queryResult.next()
-        CodeMetadataShort(
-          entry.getString("userId"),
-          entry.getString("entryId"),
-          entry.getLong("createdAt"))
-      }
-    results.toList
-  }
+  private def collectEntries(query: EntityQuery): List[CodeMetadataShort] =
+    datastore.run(query, Seq.empty[ReadOption]: _*).asScala
+      .map(entry => CodeMetadataShort(
+        entry.getString("userId"),
+        entry.getString("entryId"),
+        entry.getLong("createdAt")))
+      .toList
 }
