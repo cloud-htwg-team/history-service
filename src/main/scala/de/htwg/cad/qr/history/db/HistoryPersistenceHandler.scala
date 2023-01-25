@@ -7,7 +7,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait HistoryPersistenceHandler {
   def postEntry(tenantId: String, userId: String, toAdd: CodeAdditionRequest): Future[String]
   def getEntry(tenantId: String, userId: String, entryId: String): Future[CodeEntry]
-  def getQrCode(tenantId: String, userId: String, entryId: String): Future[Array[Byte]]
+  def getQrCode(tenantId: String, userId: String, entryId: String): Future[String]
   def getTenantEntries(tenantId: String): Future[List[CodeMetadataShort]]
   def getUserEntries(tenantId: String, userId: String): Future[List[CodeMetadataShort]]
 }

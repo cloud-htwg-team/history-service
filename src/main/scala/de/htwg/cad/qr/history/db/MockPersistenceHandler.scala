@@ -2,7 +2,7 @@ package de.htwg.cad.qr.history.db
 
 import de.htwg.cad.qr.history.{CodeAdditionRequest, CodeEntry, CodeMetadataShort}
 
-import java.util.{Base64, UUID}
+import java.util.UUID
 import scala.collection.mutable
 import scala.concurrent.Future
 
@@ -26,8 +26,8 @@ private class MockPersistenceHandler extends HistoryPersistenceHandler {
   override def getEntry(tenantId: String, userId: String, entryId: String): Future[CodeEntry] =
     Future.successful(entries(tenantId)(userId)(entryId))
 
-  override def getQrCode(tenantId: String, userId: String, entryId: String): Future[Array[Byte]] =
-    Future.successful(Base64.getDecoder.decode(entries(tenantId)(userId)(entryId).qrCode))
+  override def getQrCode(tenantId: String, userId: String, entryId: String): Future[String] =
+    Future.successful(entries(tenantId)(userId)(entryId).qrCode)
 
   override def getTenantEntries(tenantId: String): Future[List[CodeMetadataShort]] =
     Future.successful(entries.get(tenantId).toList.flatMap(_.values.flatMap(_.values)).map(e => CodeMetadataShort(e.userId, e.entryId, e.createdAt)))

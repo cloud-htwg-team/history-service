@@ -21,9 +21,10 @@ private class CloudPersistenceHandler(implicit executionContext: ExecutionContex
       .flatMap(metadata => qrDataRequest.map(qr => metadata.toEntry(Base64.getEncoder.encodeToString(qr))))
   }
 
-  override def getQrCode(tenantId: String, userId: String, entryId: String): Future[Array[Byte]] = {
+  override def getQrCode(tenantId: String, userId: String, entryId: String): Future[String] = {
     val metadataRequest = Future(DatastoreHandler.getEntry(entryId))
     val qrDataRequest = Future(GoogleBucketHandler.getObject(entryId))
+      .map(Base64.getEncoder.encodeToString)
     metadataRequest.filter(metadata => metadata.tenantId == tenantId && metadata.userId == userId)
       .flatMap(_ => qrDataRequest)
   }
