@@ -8,7 +8,7 @@ import scala.collection.mutable.ListBuffer
 
 private object DatastoreHandler {
   private val datastore = DatastoreOptions.getDefaultInstance.getService
-  private val kind = "imageId"
+  private val kind = "historyEntry"
 
   def saveMetadata(tenantId: String, userId: String, entryId: String, createdAt: Long): Unit = { // Instantiates a client
     val taskKey = datastore.newKeyFactory.setKind(kind).newKey(entryId)
