@@ -3,8 +3,8 @@ package de.htwg.cad.qr.history.db
 import com.google.cloud.storage.{BlobId, BlobInfo, StorageOptions}
 
 private object GoogleBucketHandler {
-  private val bucketName = "cloud-computing-fotos"
-  private val projectId = "cloud-computing-pre"
+  private val bucketName = "qrcode-history"
+  private val projectId = "qrcode"
   private val storage = StorageOptions.newBuilder.setProjectId(projectId).build.getService
 
   def uploadObject(objectName: String, data: Array[Byte]): Unit = {
