@@ -3,7 +3,7 @@ package de.htwg.cad.qr.history.db
 import com.google.cloud.storage.{BlobId, BlobInfo, StorageOptions}
 
 private object GoogleBucketHandler {
-  private val bucketName = "qrcode-history"
+  private val bucketName = System.getenv("BUCKET_NAME")
   private val projectId = "qrcode"
   private val storage = StorageOptions.newBuilder.setProjectId(projectId).build.getService
 
