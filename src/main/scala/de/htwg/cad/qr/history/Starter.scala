@@ -11,15 +11,13 @@ import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import de.htwg.cad.qr.history.db.HistoryPersistenceHandler
 import spray.json.DefaultJsonProtocol._
 
-import java.util.Base64
 import scala.concurrent.ExecutionContextExecutor
-import scala.util.Try
 
 object Starter extends App with JsonParser {
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-  val persistence: HistoryPersistenceHandler = HistoryPersistenceHandler.mock
+  val persistence: HistoryPersistenceHandler = HistoryPersistenceHandler.cloud
 
   implicit def myExceptionHandler: ExceptionHandler =
     ExceptionHandler {
@@ -58,11 +56,7 @@ object Starter extends App with JsonParser {
                 concat(
                   post {
                     entity(as[CodeAdditionRequest]) { request =>
-                      Try(Base64.getDecoder.decode(request.qrCode)) match {
-                        // TODO: use request.idToken
-                        case scala.util.Success(_) => complete(persistence.postEntry(tenantId, userId, request))
-                        case scala.util.Failure(_) => complete(HttpResponse(BadRequest, entity = "could not decode base64 qr code"))
-                      }
+                      complete(persistence.postEntry(tenantId, userId, request))
                     }
                   },
                   get {
