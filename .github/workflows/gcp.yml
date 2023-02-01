@@ -25,6 +25,9 @@ jobs:
         workload_identity_provider: 'projects/772208948259/locations/global/workloadIdentityPools/github-auth-action-pool/providers/gh-actions-auth-provider'
         service_account: 'github-actions-qrcode@qrcode-374515.iam.gserviceaccount.com'
 
+    - name: Pull Credentials
+      run: sh pull-credentials.sh
+
     - name: Build Docker Image
       run: docker build -t $IMAGE_NAME:latest .
 
