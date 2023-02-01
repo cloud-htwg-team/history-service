@@ -36,7 +36,8 @@ RUN sbt assembly
 #COPY --from=packager "$JAVA_MINIMAL" "$JAVA_MINIMAL"
 FROM sapmachine:11
 COPY --from=builder "/root/target/scala-2.13/history-service-assembly-0.1.jar" "/app.jar"
-COPY config/credentials /fotos/credentials
+ENV GOOGLE_APPLICATION_CREDENTIALS=/gcloud/credentials
+COPY config/credentials /gcloud/credentials
 
 EXPOSE 8888
 CMD [ "-jar", "/app.jar" ]
