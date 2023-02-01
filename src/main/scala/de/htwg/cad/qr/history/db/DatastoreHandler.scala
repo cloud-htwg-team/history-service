@@ -7,7 +7,8 @@ import de.htwg.cad.qr.history.{CodeMetadataExtended, CodeMetadataShort}
 import scala.jdk.CollectionConverters.IteratorHasAsScala
 
 private object DatastoreHandler {
-  private val datastore = DatastoreOptions.getDefaultInstance.getService
+  private val projectId = "qrcode-374515"
+  private val datastore = DatastoreOptions.newBuilder.setProjectId(projectId).build.getService
   private val kind = "historyEntry"
 
   def saveMetadata(tenantId: String, userId: String, entryId: String, createdAt: Long): Unit = { // Instantiates a client
