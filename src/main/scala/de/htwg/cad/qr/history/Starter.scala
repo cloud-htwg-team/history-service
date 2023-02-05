@@ -47,6 +47,7 @@ object Starter extends App with JsonParser {
         concat(
           path("entries") {
             get {
+              println(s"Received get all $tenantId")
               complete(persistence.getTenantEntries(tenantId))
             }
           },
@@ -56,10 +57,12 @@ object Starter extends App with JsonParser {
                 concat(
                   post {
                     entity(as[CodeAdditionRequest]) { request =>
+                      println(s"Received post $request")
                       complete(persistence.postEntry(tenantId, userId, request))
                     }
                   },
                   get {
+                    println(s"Received get all $tenantId : $userId")
                     complete(persistence.getUserEntries(tenantId, userId))
                   }
                 )
@@ -68,11 +71,13 @@ object Starter extends App with JsonParser {
                 concat(
                   pathEnd {
                     get {
+                      println(s"Received get entry $tenantId : $userId : $entryId")
                       complete(persistence.getEntry(tenantId, userId, entryId))
                     }
                   },
                   path("code") {
                     get {
+                      println(s"Received get code $tenantId : $userId : $entryId")
                       complete(persistence.getQrCode(tenantId, userId, entryId))
                     }
                   }
